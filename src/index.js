@@ -5,8 +5,8 @@ class Character {
     this.mp = character.mp;
     // this.initialHP = character.initialHP;
     // this.initialMP = character.initialMP;
-    // this.offensePower = character.offensePower;
-    // this.defencePower = character.defencePower;
+    this.offensePower = character.offensePower;
+    this.defencePower = character.defencePower;
   }
 
   showStatus(character) {
@@ -14,15 +14,24 @@ class Character {
       キャラクターの名前、HP、MPを表示する。
     */
     const mainField = document.getElementById('main');
-    mainField.textContent = `Name: ${character.name}, HP: ${character.hp}, MP: ${character.mp}`;
+    let statusField = document.createElement('div');
+    mainField.appendChild(statusField);
+    statusField.innerText = `Name: ${character.name},  HP: ${character.hp},  MP: ${character.mp}`;
   }
 
   attack(defender) {
     /*
-      キャラクターが死んでいる場合は攻撃出来ないので、それを表示する。
-      死んでいない場合は相手に与えたダメージを表示。
-      相手が死んだ場合は相手に与えたダメージと死んだことを表示する。
+      ①キャラクターが死んでいる場合は攻撃出来ないので、それを表示する。
+      ②死んでいない場合は相手に与えたダメージを表示。
+      ③相手が死んだ場合は相手に与えたダメージと死んだことを表示する。
     */
+    //①if (defender.hp === 0) {
+    //  alert(`${defender}は死んでいる！`); ※要件の「キャラクターが死んでいる場合は」のキャラクターは、攻撃する側ですか？それとも攻撃される側ですか？
+    //} else if {
+    //②相手に与えたダメージと死んだことを表示する
+    //} else {
+    //③相手に与えたダメージを表示
+    // }
   }
 
   calcAttackDamage(defender) {
@@ -32,12 +41,26 @@ class Character {
     */
   }
 }
-const chara1 = new Character({
-  name: 'Eri',
-  hp: '100',
-  mp: '50',
+
+const fighter = new Character({
+  name: '武道家',
+  hp: 40,
+  mp: 0,
+  offensePower: 15,
+  defencePower: 10,
 });
-chara1.showStatus(chara1);
+
+const monster = new Character({
+  name: 'モンスター',
+  hp: 60,
+  mp: 0,
+  offensePower: 30,
+  defencePower: 10,
+});
+
+fighter.showStatus(fighter);
+monster.showStatus(monster);
+fighter.attack(monster);
 
 // class Sorcerer extends Character {
 //   constructor() {}
@@ -64,25 +87,12 @@ chara1.showStatus(chara1);
 // }
 
 // {
-//   const fighter = new Character({
-//     name: '武道家',
-//     hp: 40,
-//     mp: 0,
-//     offensePower: 15,
-//     defencePower: 10,
-//   });
+
 //   const sorcerer = new Sorcerer({
 //     name: '魔法使い',
 //     hp: 25,
 //     mp: 10,
 //     offensePower: 8,
-//     defencePower: 10,
-//   });
-//   const monster = new Character({
-//     name: 'モンスター',
-//     hp: 60,
-//     mp: 0,
-//     offensePower: 30,
 //     defencePower: 10,
 //   });
 
