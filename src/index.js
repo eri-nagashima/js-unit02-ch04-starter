@@ -15,23 +15,37 @@ class Character {
     */
     const mainField = document.getElementById('main');
     let statusField = document.createElement('div');
+    statusField.innerHTML = `Name: ${character.name},  HP: ${character.hp},  MP: ${character.mp}`;
     mainField.appendChild(statusField);
-    statusField.innerText = `Name: ${character.name},  HP: ${character.hp},  MP: ${character.mp}`;
   }
 
   attack(defender) {
     /*
-      ①キャラクターが死んでいる場合は攻撃出来ないので、それを表示する。
-      ②死んでいない場合は相手に与えたダメージを表示。
-      ③相手が死んだ場合は相手に与えたダメージと死んだことを表示する。
+      キャラクターが死んでいる場合は攻撃出来ないので、それを表示する。
+      死んでいない場合は相手に与えたダメージを表示。
+      相手が死んだ場合は相手に与えたダメージと死んだことを表示する。
     */
-    //①if (defender.hp === 0) {
-    //  alert(`${defender}は死んでいる！`); ※要件の「キャラクターが死んでいる場合は」のキャラクターは、攻撃する側ですか？それとも攻撃される側ですか？
-    //} else if {
-    //②相手に与えたダメージと死んだことを表示する
-    //} else {
-    //③相手に与えたダメージを表示
-    // }
+
+    const mainField = document.getElementById('main');
+    let attackField = document.createElement('div');
+
+    if (this.hp === 0) {
+      alert(`${this.name}は死んでいる！`);
+    } else if (defender.hp <= 0) {
+      attackField.innerHTML = `${this.name}の攻撃！${
+        defender.name
+      }に${this.calcAttackDamage(defender)}のダメージ！${
+        defender.name
+      }を倒した！`;
+      mainField.appendChild(attackField);
+    } else {
+      attackField.innerHTML = `${this.name}の攻撃！${
+        defender.name
+      }に${this.calcAttackDamage(defender)}のダメージ！`;
+      mainField.appendChild(attackField);
+    }
+
+    defender.hp = defender.hp - this.calcAttackDamage(defender);
   }
 
   calcAttackDamage(defender) {
@@ -39,6 +53,14 @@ class Character {
       ダメージは単純に攻撃力から防御力を引いて計算する。
       ダメージが0未満の場合は、最低のダメージ1を与える。
     */
+
+    let damage = this.offensePower - defender.defencePower;
+    if (damage < 0) {
+      damage = 1;
+      return damage;
+    } else {
+      return damage;
+    }
   }
 }
 
@@ -61,6 +83,19 @@ const monster = new Character({
 fighter.showStatus(fighter);
 monster.showStatus(monster);
 fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster);
+fighter.attack(monster); //ここでmonsterのhpは0になり、attack関数の2番目の分岐: defender.hp <= 0にいくと思いましたが、分岐しない
+console.log(monster); //確認用: monsterのhpは0
+fighter.attack(monster); //ここの攻撃で、はじめて相手であるmonsterが死んだメッセージが表示される
 
 // class Sorcerer extends Character {
 //   constructor() {}
