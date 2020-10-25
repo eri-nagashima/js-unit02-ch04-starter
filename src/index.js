@@ -27,7 +27,7 @@ class Character {
     */
 
     const mainField = document.getElementById('main');
-    let attackField = document.createElement('div');
+    let attackField = document.createElement('p');
 
     if (this.hp === 0) {
       alert(`${this.name}は死んでいる！`);
@@ -37,14 +37,13 @@ class Character {
       }に${this.calcAttackDamage(defender)}のダメージ！${
         defender.name
       }を倒した！`;
-      mainField.appendChild(attackField);
     } else {
       attackField.innerHTML = `${this.name}の攻撃！${
         defender.name
       }に${this.calcAttackDamage(defender)}のダメージ！`;
-      mainField.appendChild(attackField);
     }
 
+    mainField.appendChild(attackField);
     defender.hp = defender.hp - this.calcAttackDamage(defender);
   }
 
