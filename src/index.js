@@ -28,23 +28,27 @@ class Character {
 
     const mainField = document.getElementById('main');
     let attackField = document.createElement('p');
+    defender.hp = defender.hp - this.calcAttackDamage(defender);
 
-    if (this.hp === 0) {
-      alert(`${this.name}は死んでいる！`);
-    } else if (defender.hp <= 0) {
-      attackField.innerHTML = `${this.name}の攻撃！${
-        defender.name
-      }に${this.calcAttackDamage(defender)}のダメージ！${
-        defender.name
-      }を倒した！`;
-    } else {
-      attackField.innerHTML = `${this.name}の攻撃！${
-        defender.name
-      }に${this.calcAttackDamage(defender)}のダメージ！`;
+    //キャラクターが死んで攻撃できない場合
+    if ((this.hp === 0) | (this.hp < 0)) {
+      console.log(`${this.name}は死んでいる！`);
+    }
+
+    //相手が死んで攻撃できない場合
+    if ((defender.hp === 0) | (defender.hp < 1)) {
+      console.log(`${defender.name}は死んでいる！`);
+    }
+
+    if (this.hp > 0 && (defender.hp < 1) | (defender.hp === 0)) {
+      attackField.innerHTML = `${this.name}の攻撃！${defender.name}に${this.calcAttackDamage(defender)}のダメージ！${defender.name}を倒した！`;
+    }
+
+    if (this.hp > 0 && defender.hp > 0) {
+      attackField.innerHTML = `${this.name}の攻撃！${defender.name}に${this.calcAttackDamage(defender)}のダメージ！`;
     }
 
     mainField.appendChild(attackField);
-    defender.hp = defender.hp - this.calcAttackDamage(defender);
   }
 
   calcAttackDamage(defender) {
@@ -54,12 +58,11 @@ class Character {
     */
 
     let damage = this.offensePower - defender.defencePower;
-    if (damage < 0) {
+    if (damage <= 0) {
       damage = 1;
       return damage;
-    } else {
-      return damage;
     }
+    return damage;
   }
 }
 
@@ -81,6 +84,7 @@ const monster = new Character({
 
 fighter.showStatus(fighter);
 monster.showStatus(monster);
+
 fighter.attack(monster);
 fighter.attack(monster);
 fighter.attack(monster);
@@ -92,9 +96,8 @@ fighter.attack(monster);
 fighter.attack(monster);
 fighter.attack(monster);
 fighter.attack(monster);
-fighter.attack(monster); //ここでmonsterのhpは0になり、attack関数の2番目の分岐: defender.hp <= 0にいくと思いましたが、分岐しない
-console.log(monster); //確認用: monsterのhpは0
-fighter.attack(monster); //ここの攻撃で、はじめて相手であるmonsterが死んだメッセージが表示される
+fighter.attack(monster);
+console.log(monster);
 
 // class Sorcerer extends Character {
 //   constructor() {}
