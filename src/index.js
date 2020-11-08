@@ -37,14 +37,16 @@ class Character {
     defender.hp = defender.hp - this.calcAttackDamage(defender);
 
     if (this.hp <= 0) {
-      //キャラクターが死んで攻撃できない場合
       showDead.innerHTML = `${this.name}は死んでいる！`;
-    } else if (defender.hp <= 0) {
-      //キャラクターの攻撃て相手を倒した&死んだ場合
-      attackField.innerHTML = `${defender.name}を倒した！`;
+    }
+
+    if (defender.hp <= 0) {
       showDead.innerHTML = `${defender.name}は死んでいる！`;
+    }
+
+    if (this.hp > 0 && defender.hp <= 0) {
+      attackField.innerHTML = `${this.name}の攻撃！${defender.name}に${this.calcAttackDamage(defender)}のダメージ！${defender.name}を倒した！`;
     } else {
-      //キャラクター&相手が生きている場合
       attackField.innerHTML = `${this.name}の攻撃！${defender.name}に${this.calcAttackDamage(defender)}のダメージ！`;
     }
   }
