@@ -27,28 +27,26 @@ class Character {
     */
 
     const mainField = document.getElementById('main');
+
     let attackField = document.createElement('p');
+    mainField.appendChild(attackField);
+
+    let showDead = document.createElement('p');
+    mainField.appendChild(showDead);
+
     defender.hp = defender.hp - this.calcAttackDamage(defender);
 
-    //キャラクターが死んで攻撃できない場合
-    if ((this.hp === 0) | (this.hp < 0)) {
-      console.log(`${this.name}は死んでいる！`);
-    }
-
-    //相手が死んで攻撃できない場合
-    if ((defender.hp === 0) | (defender.hp < 1)) {
-      console.log(`${defender.name}は死んでいる！`);
-    }
-
-    if (this.hp > 0 && (defender.hp < 1) | (defender.hp === 0)) {
-      attackField.innerHTML = `${this.name}の攻撃！${defender.name}に${this.calcAttackDamage(defender)}のダメージ！${defender.name}を倒した！`;
-    }
-
-    if (this.hp > 0 && defender.hp > 0) {
+    if (this.hp <= 0) {
+      //キャラクターが死んで攻撃できない場合
+      showDead.innerHTML = `${this.name}は死んでいる！`;
+    } else if (defender.hp <= 0) {
+      //キャラクターの攻撃て相手を倒した&死んだ場合
+      attackField.innerHTML = `${defender.name}を倒した！`;
+      showDead.innerHTML = `${defender.name}は死んでいる！`;
+    } else {
+      //キャラクター&相手が生きている場合
       attackField.innerHTML = `${this.name}の攻撃！${defender.name}に${this.calcAttackDamage(defender)}のダメージ！`;
     }
-
-    mainField.appendChild(attackField);
   }
 
   calcAttackDamage(defender) {
@@ -58,10 +56,15 @@ class Character {
     */
 
     let damage = this.offensePower - defender.defencePower;
+
     if (damage <= 0) {
       damage = 1;
-      return damage;
     }
+
+    if (this.hp <= 0) {
+      damage = 0;
+    }
+
     return damage;
   }
 }
@@ -86,18 +89,10 @@ fighter.showStatus(fighter);
 monster.showStatus(monster);
 
 fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-fighter.attack(monster);
-console.log(monster);
+monster.attack(fighter);
+
+fighter.showStatus(fighter);
+monster.showStatus(monster);
 
 // class Sorcerer extends Character {
 //   constructor() {}
