@@ -3,8 +3,8 @@ class Character {
     this.name = character.name;
     this.hp = character.hp;
     this.mp = character.mp;
-    // this.initialHP = character.initialHP;
-    // this.initialMP = character.initialMP;
+    this.initialHP = character.initialHP;
+    this.initialMP = character.initialMP;
     this.offensePower = character.offensePower;
     this.defencePower = character.defencePower;
   }
